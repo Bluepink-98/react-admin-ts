@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-01-23 17:23:58
  */
 export interface UserModel {
-	password?: string;
-	username?: string;
-
+    id:string;
+	password: string;
+	username: string;
 }

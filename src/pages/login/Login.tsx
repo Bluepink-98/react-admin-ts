@@ -4,11 +4,13 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import { RuleObject } from 'antd/lib/form';
 import { StoreValue } from 'antd/lib/form/interface';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { signIn } from '../../utils/requests/login';
 
 import './login.css';
-import logo from './images/logo.png';
-import memory from '../../utils/memory/memory';
+import logo from '../../assets/images/logo.png';
+import memoryUtils from '../../utils/memory/memoryUtils';
+import storageUtils from '../../utils/memory/storageUtils';
 
 export interface IAuthModel {
     username: string;
@@ -43,9 +45,10 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
             ...values,
         });
         if (result.status === 0) {
-            const user = result.data;
-            memory.user = user;
             message.success('登录成功');
+            const user = result.data;
+            memoryUtils.user = user; //保存在内存中
+            storageUtils.saveUser(user); //保存在localstorage中
             this.props.history.replace('/');
         } else {
             message.error('登录失败');
@@ -56,6 +59,11 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
         console.log('Failed:', errorInfo);
     };
     render() {
+        const user = memoryUtils.user;
+        console.log(user,'========');
+        if (user) {
+            return <Redirect to='/'></Redirect>;
+        }
         return (
             <div className='login'>
                 <header className='login-header'>

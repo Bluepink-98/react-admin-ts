@@ -1,15 +1,29 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import memory from '../../utils/memory/memory';
+import memoryUtils from '../../utils/memory/memoryUtils';
+import LeftNav from '../../components/left-nav'
+import { Layout } from 'antd';
+
+const { Header, Footer, Sider, Content } = Layout;
 const Admin = () => {
-    const user = memory.user;
-    if (user.id === ' ') {
+    const user = memoryUtils.user;
+    console.log(user);
+
+    if (user === undefined) {
         return <Redirect to='/login'></Redirect>;
     }
     return (
-        <div>
-            <h1> hello {user.username}</h1>
-        </div>
+        <Layout style={{ height: '100%'}}>
+            <Sider>
+                <LeftNav></LeftNav>
+            </Sider>
+            <Layout>
+                <Header> </Header>
+                <Content>Content</Content>
+                <Footer style={{textAlign:'center',color:'#ccc'}}>推荐使用谷歌浏览器打开网页，效果更好</Footer>
+            </Layout>  
+        </Layout>
+        
     );
 };
 

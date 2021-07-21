@@ -6,14 +6,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 export default class App extends React.Component {
     public render() {
         return (
-            <div>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path='/login' component={Login}></Route>
-                        <Route path='/' component={Admin}></Route>
-                    </Switch>
-                </BrowserRouter>
-            </div>
+            <BrowserRouter>
+                <Switch>
+                    <Route path='/login' component={Login}></Route>
+                    <Route path='/' component={Admin}></Route>
+                </Switch>
+            </BrowserRouter>
         );
     }
 }
