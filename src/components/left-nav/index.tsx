@@ -1,60 +1,84 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { withRouter } from 'react-router';
+import { Link, useLocation } from 'react-router-dom';
+
 import logo from '../../assets/images/logo.png';
 import './index.css';
-import menuList from '../../config/menuConfig';
 
-import { Menu, Button } from 'antd';
-import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
+import menuList from '../../config/menuConfig';
+import { IMenu } from '../../modules/common';
+
+import { Menu } from 'antd';
 
 const { SubMenu } = Menu;
 const LeftNav = () => {
-  const [collapsed, setCollapsed] = useState(false);
+    const location = useLocation();
+    const [openkey, setOpenKey] = useState('');
+   /*  const getOpenKey = (menuList: Array<IMenu>) => {
+        return menuList.map((item: IMenu) => {
+            if (item.children) {
+                const cItem = item.children.find(
+                    (cItem) => location.pathname.indexOf(cItem.key) === 0
+                );
+                if (cItem) {
+                    setOpenKey(item.key);
+                }
+            }
+        });
+    }; */
 
-  const getMenuList = (menuList: any) => {
-    return menuList.map((item: any) => {
-      if (!item.children) {
-        return (
-          <Menu.Item key={item.key} icon={<item.icon />}>
-            <Link to={item.key}>item.title</Link>
-          </Menu.Item>
-        );
-      } else {
-        return (
-          <SubMenu key={item.key} icon={<item.icon />} title={item.title}>
-            {getMenuList(item.children)}
-          </SubMenu>
-        );
-      }
-    });
-  };
-  return (
-    <div className='left-nav'>
-      <Link to='/' className='left-nav-header'>
-        <img src={logo} alt='' />
-        <h1>后台管理</h1>
-      </Link>
-      <div style={{ width: '100%' }}>
-        <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          mode='inline'
-          theme='dark'
-          inlineCollapsed={collapsed}
-        >
-          {getMenuList(menuList)}
-        </Menu>
-      </div>
-    </div>
-  );
+    const getMenuList = (_menuList: Array<IMenu>) => {
+        return _menuList.map((item: IMenu) => {
+            if (!item.children) {
+                return (
+                    <Menu.Item key={item.key}>
+                        <span className={`iconfont ${item.icon}`}></span>
+                        <Link to={item.key}>{item.title}</Link>
+                    </Menu.Item>
+                );
+            } else {
+                /*  const cItem = item.children.find((cItem) => {
+                    return cItem.key === location.pathname;
+                });
+                if (cItem) {
+                    openkey=item.key;
+                } */
+                return (
+                    <SubMenu
+                        key={item.key}
+                        title={
+                            <>
+                                <span
+                                    className={`iconfont ${item.icon}`}
+                                ></span>
+                                {item.title}
+                            </>
+                        }
+                    >
+                        {getMenuList(item.children)}
+                    </SubMenu>
+                );
+            }
+        });
+    };
+    return (
+        <div className='left-nav'>
+            <Link to='/' className='left-nav-header'>
+                <img src={logo} alt='' />
+                <h1>后台管理</h1>
+            </Link>
+            <div style={{ width: '100%' }}>
+                <Menu
+                    selectedKeys={[location.pathname]}
+                    defaultOpenKeys={[openkey]}
+                    mode='inline'
+                    theme='dark'
+                >
+                    {getMenuList(menuList)}
+                </Menu>
+            </div>
+        </div>
+    );
 };
 
-export default LeftNav;
+export default withRouter(LeftNav);

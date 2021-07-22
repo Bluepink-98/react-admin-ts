@@ -1,39 +1,26 @@
-interface IMenuList {
-  title: string;
-  key: string;
-  icon: string;
-  isPublic?: Boolean;
-  children?: [
-    {
-      title: string;
-      key: string;
-      icon: string;
-      },
-  ];
-}
-
-const menuList: Array<IMenuList> = [
+import {IMenu} from '../modules/common'
+const menuList: Array<IMenu> = [
   {
     title: '首页', // 菜单标题名称
     key: '/home', // 对应的path
-    icon: 'home', // 图标名称
+    icon: 'icon-030-businessman-1', // 图标名称
     isPublic: true, // 公开的
   },
   {
     title: '商品',
     key: '/products',
-    icon: 'appstore',
+    icon: 'icon-shangpin',
     children: [
       // 子菜单列表
       {
         title: '品类管理',
         key: '/category',
-        icon: 'bars',
+        icon: 'icon-leimupinleifenleileibie',
       },
       {
         title: '商品管理',
         key: '/product',
-        icon: 'tool',
+        icon: 'icon-shangpin1',
       },
     ],
   },
@@ -41,33 +28,33 @@ const menuList: Array<IMenuList> = [
   {
     title: '用户管理',
     key: '/user',
-    icon: 'user',
+    icon: 'icon-yonghu',
   },
   {
     title: '角色管理',
     key: '/role',
-    icon: 'safety',
+    icon: 'icon-yonghu1',
   },
 
   {
     title: '图形图表',
     key: '/charts',
-    icon: 'area-chart',
+    icon: 'icon-weibiaoti--',
     children: [
       {
         title: '柱形图',
         key: '/charts/bar',
-        icon: 'bar-chart',
+        icon: 'icon-tubiaozhuxingtu',
       },
       {
         title: '折线图',
         key: '/charts/line',
-        icon: 'line-chart',
+        icon: 'icon-tubiao2',
       },
       {
         title: '饼图',
         key: '/charts/pie',
-        icon: 'pie-chart',
+        icon: 'icon-tubiao1',
       },
     ],
   },
@@ -75,7 +62,7 @@ const menuList: Array<IMenuList> = [
   {
     title: '订单管理',
     key: '/order',
-    icon: 'windows',
+    icon: 'icon-wodedingdan',
   },
 ];
 

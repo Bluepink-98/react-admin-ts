@@ -60,7 +60,6 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
     };
     render() {
         const user = memoryUtils.user;
-        console.log(user,'========');
         if (user) {
             return <Redirect to='/'></Redirect>;
         }
