@@ -27,7 +27,7 @@ const Admin = () => {
       </Sider>
       <Layout>
         <Header></Header>
-        <Content>
+        <Content style={{backgroundColor:'#fff', margin:20}}>
           <Switch>
             <Redirect from='/' exact to='/home'/> 
             <Route path='/home' component={Home}></Route>

@@ -15,12 +15,15 @@ import storageUtils from '../../utils/memory/storageUtils';
 export interface IAuthModel {
     username: string;
     password: string;
+    captcha: string;
     remember?: boolean;
 }
 interface IProps {
     signIn: (data: IAuthModel) => any;
 }
 class Login extends Component<IProps & RouteComponentProps, {}> {
+    state = { imgSrc: '/api1/getCaptcha' };
+
     validator = (rule: RuleObject, value: StoreValue) => {
         if (!value) {
             return Promise.reject('密码必须输入');
@@ -35,11 +38,12 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
 
     layout = {
         labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
+        wrapperCol: { span: 30 },
     };
     tailLayout = {
         wrapperCol: { offset: 8, span: 16 },
     };
+
     onFinish = async (values: IAuthModel | any) => {
         const result = await signIn({
             ...values,
@@ -50,14 +54,24 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
             memoryUtils.user = user; //保存在内存中
             storageUtils.saveUser(user); //保存在localstorage中
             this.props.history.replace('/');
+        } else if (result.status === 1) {
+            message.error('用户名或密码不正确!');
         } else {
-            message.error('登录失败');
+            message.error('验证码错误');
         }
     };
 
     onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        /*  console.log('Failed:', errorInfo); */
     };
+
+    // 点击切换验证码
+    toggleVerify = () => {
+        this.setState((state) => ({
+            imgSrc: '/api1/getCaptcha?d=' + Math.random(),
+        }));
+    };
+
     render() {
         const user = memoryUtils.user;
         if (user) {
@@ -79,7 +93,6 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
                         onFinishFailed={this.onFinishFailed}
                     >
                         <Form.Item
-                            label='Username'
                             name='username'
                             rules={[
                                 {
@@ -102,11 +115,10 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder='请输入用户名'/>
                         </Form.Item>
 
                         <Form.Item
-                            label='Password'
                             name='password'
                             rules={[
                                 {
@@ -114,17 +126,36 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
                                 },
                             ]}
                         >
-                            <Input.Password />
+                            <Input.Password placeholder='请输入密码'/>
                         </Form.Item>
 
+                        <Form.Item
+                            style={{float:'left', display:'inline'}}
+                            name='captcha'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入验证码',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='请输入验证码'/>
+                        </Form.Item>
+                        <div style={{float:'left', display:'inline',marginLeft:'40px'}}>
+                            <img
+                                src={this.state.imgSrc}
+                                alt='captcha'
+                                onClick={this.toggleVerify}
+                            ></img>
+                        </div>
                         <Form.Item
                             {...this.tailLayout}
                             name='remember'
                             valuePropName='checked'
+                            style={{clear:'both'}}
                         >
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>
-
                         <Form.Item {...this.tailLayout}>
                             <Button type='primary' htmlType='submit'>
                                 Submit

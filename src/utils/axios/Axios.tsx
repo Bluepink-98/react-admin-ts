@@ -11,7 +11,7 @@ declare module 'axios' {
 }
 
 const axiosService = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3001',
     // timeout: CONN_TIMEOUT,
     // adapter: AxiosCacheAdapter,
     headers: {
