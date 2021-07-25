@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import memoryUtils from '../../utils/memory/memoryUtils';
+import storageUtils from '../../utils/memory/storageUtils';
 import LeftNav from '../../components/left-nav';
 import Header from '../../components/header'
 import { Layout } from 'antd';
 
-import Home from '../home/Home';
+import Home from '../home';
 import Category from '../category/Category';
 import Product from '../products/Product';
 import Role from '../role/Role';
@@ -17,7 +18,7 @@ import Order from '../order/Order'
 const { Footer, Sider, Content } = Layout;
 const Admin = () => {
   const user = memoryUtils.user;
-  if (user === undefined) {
+  if (storageUtils.getUser() === undefined) {
     return <Redirect to='/login'></Redirect>;
   }
   return (

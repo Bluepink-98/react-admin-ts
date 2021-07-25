@@ -6,12 +6,10 @@ import { StoreValue } from 'antd/lib/form/interface';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { signIn } from '../../utils/requests/login';
-
-import './login.css';
 import logo from '../../assets/images/logo.png';
 import memoryUtils from '../../utils/memory/memoryUtils';
 import storageUtils from '../../utils/memory/storageUtils';
-
+import './login.css';
 export interface IAuthModel {
     username: string;
     password: string;
@@ -158,7 +156,7 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
                         </Form.Item>
                         <Form.Item {...this.tailLayout}>
                             <Button type='primary' htmlType='submit'>
-                                Submit
+                                登录
                             </Button>
                         </Form.Item>
                     </Form>
