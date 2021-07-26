@@ -1,4 +1,4 @@
-import { UserModel } from '../../modules/usermodel';
+import { UserModel } from '../../modules/UserModel';
 
 var store = require('store');
 const USER_KEY = 'user_key';

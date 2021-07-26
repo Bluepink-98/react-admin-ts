@@ -9,12 +9,12 @@ import storageUtils from '../../utils/memory/storageUtils';
 import { getWeather } from '../../utils/requests/login';
 import { formateDate } from '../../utils/memory/dateUtils';
 import LinkButton from '../link-button/index';
-import { useMedia } from 'react-use';
+// import { useMedia } from 'react-use';
 
 import './index.css';
 
 const Header = () => {
-    const isMobile = useMedia('(max-width: 767px)');
+    // const isMobile = useMedia('(max-width: 767px)');
     const [currentTime, setCurrentTime] = useState(formateDate(Date.now()));
     const [weather, setWeather] = useState('');
     const [city, setCity] = useState('');
@@ -96,15 +96,11 @@ const Header = () => {
             <div className='header-bottom'>
                 <div className='header-bottom-left'>{title}</div>
                 <div className='header-bottom-right'>
-                    {isMobile ? (
-                        <div>1</div>
-                    ) : (
-                        <Space>
-                            <span>{currentTime}</span>
-                            <span>{city}</span>
-                            <span>{weather}</span>
-                        </Space>
-                    )}
+                    <Space>
+                        <span>{currentTime}</span>
+                        <span>{city}</span>
+                        <span>{weather}</span>
+                    </Space>
                 </div>
             </div>
         </div>

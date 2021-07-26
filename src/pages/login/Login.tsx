@@ -27,7 +27,7 @@ class Login extends Component<IProps & RouteComponentProps, {}> {
             return Promise.reject('密码必须输入');
         } else if (value.length < 3 || value.length > 12) {
             return Promise.reject('密码长度不能小于4位或大于12位');
-        } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+        } else if ((/^[a-zA-Z0-9]+$/).test(value)){
             return Promise.reject('密码必须是英文，数字和下划线组成');
         } else {
             return Promise.resolve();
